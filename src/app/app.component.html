@@ -1,7 +1,7 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="p-8 w-full h-full bg-white text-zinc-700">
-    <div class="w-4/6 flex flex-col p-4 gap-4 mx-auto bg-slate-200 border-blue-900 border rounded-md border-dark-blue-stef border-2">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="p-6 w-full h-full bg-white text-zinc-700">
+    <div class="w-4/6 h-full flex flex-col p-4 gap-4 mx-auto bg-slate-200 border-blue-900 border rounded-md border-dark-blue-stef border-2">
         <div class="flex items-center justify-center mb-8">
-            <img src="stef-logo.png" alt="STEF logo" class="h-16 ">
+            <img src="stef-logo.png" alt="STEF logo" class="h-12">
         </div>
         <div class="flex flex-row gap-4 gap-4">
             <div class="flex-1">
@@ -42,7 +42,7 @@
             <textarea type="text" formControlName="prompt" class="py-3 px-4 w-full rounded"></textarea>
         </div>
         <!-- content div -->
-        <div #discussion class="flex-grow flex flex-col mb-2 overflow-auto h-80">
+        <div #discussion class="flex-grow h-96 flex flex-col mb-2 overflow-auto">
             @for (notification of notifications; track notification.date) {
                 <div class="flex items-start mt-2 mr-2 fill-dark-blue-stef">
                     @if (notification.author === botName) {
@@ -54,9 +54,9 @@
                         </div>
                         <p style="white-space: pre-wrap;">{{ notification.msg }}</p>
                         @if (notification.citations && notification.citations.length > 0) {
-                            @for (citation of notification.citations; track citation) {
-                                @for (retrievedReference of citation.retrievedReferences; track retrievedReference) {
-                                    <div class="font-bold text-dark-blue-stef" title="{{ retrievedReference.location.s3Location.uri }}: {{ retrievedReference.content.text }}">Source</div>
+                            @for (citation of notification.citations; track citation; let citationIndex = $index) {
+                                @for (retrievedReference of citation.retrievedReferences; track retrievedReference; let index = $index) {
+                                    <div class="font-bold text-dark-blue-stef" title="{{ retrievedReference.location.s3Location.uri }}: {{ retrievedReference.content.text }}">Citation {{ citationIndex + 1 }} - Source {{ index + 1 }}</div>
                                 }
                             }
                         }

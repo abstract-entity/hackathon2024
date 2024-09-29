@@ -20,6 +20,7 @@ export class AppComponent implements AfterViewChecked {
   recognizing = false;
   recognition = new (window as any).webkitSpeechRecognition();
   @ViewChild('message') private messageElement!: ElementRef;
+  @ViewChild('discussion') private discussionElement!: ElementRef;
   output: string = '';
   loading: boolean = false;
   notifications: any[] = [];
@@ -89,12 +90,10 @@ Tu répondras au prompt ci-dessous :
     { id: 'mistral.mixtral-8x7b-instruct-v0:1', name: 'Mixtral 8x7b' }
   ];
 
-  
-
   form = new FormGroup({
     client: new FormControl('Rana'),
     site: new FormControl('028F - Stef Fidenza'),
-    rag: new FormControl(false),
+    rag: new FormControl(true),
     prompt: new FormControl(this.basicPrompt),
     message: new FormControl('je dois appliquer une augmentation de 10% aux prestations que je fournis à mon client, comment dois je aborder le sujet avec lui ?'),
     tonality: new FormControl('professionnel'),
@@ -152,8 +151,7 @@ Tu répondras au prompt ci-dessous :
       date: new Date(),
       msg: this.form.get('message')?.value
     });
-    // scroll discussion to bottom
-    this.messageElement.nativeElement.scrollTop = this.messageElement.nativeElement.scrollHeight;
+    setTimeout(() => this.discussionElement.nativeElement.scrollTop = this.discussionElement.nativeElement.scrollHeight, 100);
 
     this.#http.post<any>('/api', this.form?.value).subscribe((data) => {
       console.log(data);
@@ -172,8 +170,8 @@ Tu répondras au prompt ci-dessous :
         });
       }
       this.loading = false;
-    // scroll discussion to bottom
-    this.messageElement.nativeElement.scrollTop = this.messageElement.nativeElement.scrollHeight;
+      // scroll discussion to bottom
+      setTimeout(() => this.discussionElement.nativeElement.scrollTop = this.discussionElement.nativeElement.scrollHeight, 100);
     });
     this.form.get('message')?.setValue('');
   }
