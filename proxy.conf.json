@@ -1,0 +1,9 @@
+{
+"/api": {
+    "target": "http://172.22.92.5:3000/",
+    "secure": false,
+    "pathRewrite": {
+        "^/api": ""
+    }
+}
+}
