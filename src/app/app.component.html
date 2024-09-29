@@ -56,7 +56,7 @@
                         @if (notification.citations && notification.citations.length > 0) {
                             @for (citation of notification.citations; track citation) {
                                 @for (retrievedReference of citation.retrievedReferences; track retrievedReference) {
-                                    <div class="font-bold text-dark-blue-stef" title="{{ retrievedReference.location.s3Location.uri }}: { retrievedReference.content.text }}">Source</div>
+                                    <div class="font-bold text-dark-blue-stef" title="{{ retrievedReference.location.s3Location.uri }}: {{ retrievedReference.content.text }}">Source</div>
                                 }
                             }
                         }

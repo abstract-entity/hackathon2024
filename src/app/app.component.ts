@@ -152,6 +152,9 @@ Tu répondras au prompt ci-dessous :
       date: new Date(),
       msg: this.form.get('message')?.value
     });
+    // scroll discussion to bottom
+    this.messageElement.nativeElement.scrollTop = this.messageElement.nativeElement.scrollHeight;
+
     this.#http.post<any>('/api', this.form?.value).subscribe((data) => {
       console.log(data);
       if (data.output.text) {
@@ -169,6 +172,8 @@ Tu répondras au prompt ci-dessous :
         });
       }
       this.loading = false;
+    // scroll discussion to bottom
+    this.messageElement.nativeElement.scrollTop = this.messageElement.nativeElement.scrollHeight;
     });
     this.form.get('message')?.setValue('');
   }
